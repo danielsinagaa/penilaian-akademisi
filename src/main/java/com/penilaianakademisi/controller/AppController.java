@@ -105,7 +105,7 @@ public class AppController {
             return "list_karyawan_empty";
         }
         model.addAttribute("karyawanList", karyawanService.findAll());
-        model.addAttribute("aPlusMin", karyawanAplusminService.findAll());
+        model.addAttribute("aPlusMin", karyawanAplusminService.findAll().get(0));
         return "list_karyawan";
     }
 
