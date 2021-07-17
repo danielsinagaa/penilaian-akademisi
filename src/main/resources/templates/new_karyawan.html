@@ -40,32 +40,37 @@
 
 <div class="container">
   <h1>Karyawan Management System</h1>
-  <hr>
-  <h2>Tambahkan Karyawan Baru</h2>
 
-  <form action="#" th:action="@{/saveKaryawan}" th:object="${karyawan}"
-        method="POST">
-    <input type="text" th:field="*{nama}"
-           placeholder="Nama Lengkap Karyawan" class="form-control mb-4 col-4">
+  <div style="width: 40%; background-color: #5E8B7E; color: white; padding: 2vw 14vh 3vw 5vh; margin-bottom: 5vh; border-radius: 7px">
+    <h2>Tambahkan Karyawan Baru</h2>
 
-    <input type="number" step="any" th:field="*{k1}"
-           placeholder="K1" class="form-control mb-4 col-4">
+    <form action="#" th:action="@{/saveKaryawan}" th:object="${karyawan}" style="width: 90%"
+          method="POST">
 
-    <input type="number" step="any" th:field="*{k2}"
-           placeholder="K2" class="form-control mb-4 col-4">
+      <label>Nama Karyawan: </label>
+      <input type="text" th:field="*{nama}"
+             placeholder="Nama Lengkap Karyawan" class="form-control mb-4 col-4">
 
-    <input type="number" step="any" th:field="*{k3}"
-           placeholder="K3" class="form-control mb-4 col-4">
+      <label>K1: </label>
+      <input type="number" step="any" th:field="*{k1}"
+             placeholder="K1" class="form-control mb-4 col-4">
 
-    <input type="number" step="any" th:field="*{k4}"
-           placeholder="K4" class="form-control mb-4 col-4">
+      <label>K2: </label>
+      <input type="number" step="any" th:field="*{k2}"
+             placeholder="K2" class="form-control mb-4 col-4">
 
-    <button type="submit" class="btn btn-info col-2">Tambah Karyawan</button>
-  </form>
+      <label>K3: </label>
+      <input type="number" step="any" th:field="*{k3}"
+             placeholder="K3" class="form-control mb-4 col-4">
 
-  <hr>
+      <label>K4: </label>
+      <input type="number" step="any" th:field="*{k4}"
+             placeholder="K4" class="form-control mb-4 col-4">
 
-  <a th:href="@{/karyawan}">Kembali Pada List Karyawan</a>
+      <button type="submit" class="btn" style="width: auto; background-color: dimgray; color: white">Tambah Karyawan</button>
+    </form>
+  </div>
+
 </div>
 </body>
 </html>
