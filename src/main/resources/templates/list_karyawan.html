@@ -48,11 +48,22 @@
 
         <div style="width: 60vw; padding-top: 1vh; padding-bottom: 1vh; background-color: #A7C4BC; border-radius: 7px">
 
-            <div style="margin-right: 5vh; text-align: right">
+            <div style="margin-right: 5vh; text-align: right; position: relative; height: 15vh">
                 <span>Download Excel: </span>
                 <a th:href="@{/download/karyawan}" class="btn btn-sm mb-3" style="background-color: #DEEEEA; color: white">
                     <img src="../static/images/download.png" th:src="@{/images/download.png}" width="30" class="rounded mx-auto" >
                 </a>
+
+
+                <div style="position: absolute; top: 0; left: 5vh; text-align: left">
+                    <h5>Masukkan Data Excel: </h5>
+
+                    <form th:action="@{/upload/karyawan}" method="post" enctype="multipart/form-data">
+                        <input type="file" name="file" accept="application/vnd.ms-excel application/vnd.openxmlformats-officedocument.spreadsheetml.sheet">
+                        <br>
+                        <button style="background-color: #053742;color: white; border-radius: 5px" type="submit">submit</button>
+                    </form>
+                </div>
             </div>
 
             <table class="table table-striped table-bordered table-hover table-sm" style="width: 55vw; margin-top: 1vh; margin-right: auto; margin-left: auto">
