@@ -28,9 +28,7 @@ public class KaryawanService extends AbstractService<Karyawan> {
 
         karyawanList.remove(findById(id));
 
-        for (Karyawan delete : findAll()){
-            deleteById(delete.getId());
-        }
+        deleteAll();
 
         List<Double> k1List = new ArrayList<>();
         List<Double> k2List = new ArrayList<>();
@@ -86,49 +84,51 @@ public class KaryawanService extends AbstractService<Karyawan> {
             k.setTernormalisasik4(roundUp(pembagik4 * 35));
         }
 
-        Double aPlusK1 = karyawanList.stream()
-                .map(Karyawan::getTernormalisasik1)
-                .mapToDouble(v -> v)
-                .max().orElseThrow(NoSuchElementException::new);
-        Double aPlusK2 = karyawanList.stream()
-                .map(Karyawan::getTernormalisasik2)
-                .mapToDouble(v -> v)
-                .max().orElseThrow(NoSuchElementException::new);
-        Double aPlusK3 = karyawanList.stream()
-                .map(Karyawan::getTernormalisasik3)
-                .mapToDouble(v -> v)
-                .max().orElseThrow(NoSuchElementException::new);
-        Double aPlusK4 = karyawanList.stream()
-                .map(Karyawan::getTernormalisasik4)
-                .mapToDouble(v -> v)
-                .max().orElseThrow(NoSuchElementException::new);
+        if (karyawanList.size() != 0 ){
+            Double aPlusK1 = karyawanList.stream()
+                    .map(Karyawan::getTernormalisasik1)
+                    .mapToDouble(v -> v)
+                    .max().orElseThrow(null);
+            Double aPlusK2 = karyawanList.stream()
+                    .map(Karyawan::getTernormalisasik2)
+                    .mapToDouble(v -> v)
+                    .max().orElseThrow(null);
+            Double aPlusK3 = karyawanList.stream()
+                    .map(Karyawan::getTernormalisasik3)
+                    .mapToDouble(v -> v)
+                    .max().orElseThrow(null);
+            Double aPlusK4 = karyawanList.stream()
+                    .map(Karyawan::getTernormalisasik4)
+                    .mapToDouble(v -> v)
+                    .max().orElseThrow(null);
 
-        Double aMinK1 = karyawanList.stream()
-                .map(Karyawan::getTernormalisasik1)
-                .mapToDouble(v -> v)
-                .min().orElseThrow(NoSuchElementException::new);
-        Double aMinK2 = karyawanList.stream()
-                .map(Karyawan::getTernormalisasik2)
-                .mapToDouble(v -> v)
-                .min().orElseThrow(NoSuchElementException::new);
-        Double aMinK3 = karyawanList.stream()
-                .map(Karyawan::getTernormalisasik3)
-                .mapToDouble(v -> v)
-                .min().orElseThrow(NoSuchElementException::new);
-        Double aMinK4 = karyawanList.stream()
-                .map(Karyawan::getTernormalisasik4)
-                .mapToDouble(v -> v)
-                .min().orElseThrow(NoSuchElementException::new);
+            Double aMinK1 = karyawanList.stream()
+                    .map(Karyawan::getTernormalisasik1)
+                    .mapToDouble(v -> v)
+                    .min().orElseThrow(null);
+            Double aMinK2 = karyawanList.stream()
+                    .map(Karyawan::getTernormalisasik2)
+                    .mapToDouble(v -> v)
+                    .min().orElseThrow(null);
+            Double aMinK3 = karyawanList.stream()
+                    .map(Karyawan::getTernormalisasik3)
+                    .mapToDouble(v -> v)
+                    .min().orElseThrow(null);
+            Double aMinK4 = karyawanList.stream()
+                    .map(Karyawan::getTernormalisasik4)
+                    .mapToDouble(v -> v)
+                    .min().orElseThrow(null);
 
-        aPlusMin = new KaryawanAplusMin(aPlusK1, aPlusK2, aPlusK3,aPlusK4, aMinK1,aMinK2,aMinK3, aMinK4);
-        aplusminService.save(aPlusMin);
+            aPlusMin = new KaryawanAplusMin(aPlusK1, aPlusK2, aPlusK3,aPlusK4, aMinK1,aMinK2,aMinK3, aMinK4);
+            aplusminService.save(aPlusMin);
 
-        for (Karyawan k : karyawanList){
-            k.setDPlus(roundUp(getDplus(k, aPlusMin)));
-            k.setDMin(roundUp(getDmin(k, aPlusMin)));
-            k.setPreferensi(roundUp(getDmin(k, aPlusMin) / (getDmin(k, aPlusMin) + getDplus(k, aPlusMin))));
+            for (Karyawan k : karyawanList){
+                k.setDPlus(roundUp(getDplus(k, aPlusMin)));
+                k.setDMin(roundUp(getDmin(k, aPlusMin)));
+                k.setPreferensi(roundUp(getDmin(k, aPlusMin) / (getDmin(k, aPlusMin) + getDplus(k, aPlusMin))));
 
-            save(k);
+                save(k);
+            }
         }
     }
 
@@ -147,9 +147,7 @@ public class KaryawanService extends AbstractService<Karyawan> {
 
         karyawanList.set(karyawanIndex, karyawanEdit);
 
-        for (Karyawan delete : findAll()){
-            deleteById(delete.getId());
-        }
+        deleteAll();
 
         List<Double> k1List = new ArrayList<>();
         List<Double> k2List = new ArrayList<>();
@@ -210,39 +208,40 @@ public class KaryawanService extends AbstractService<Karyawan> {
             k.setTernormalisasik4(roundUp(pembagik4 * 35));
         }
 
-        Double aPlusK1 = karyawanList.stream()
+        if (karyawanList.size() != 0 ){
+            Double aPlusK1 = karyawanList.stream()
                 .map(Karyawan::getTernormalisasik1)
                 .mapToDouble(v -> v)
-                .max().orElseThrow(NoSuchElementException::new);
+                .max().orElseThrow(null);
         Double aPlusK2 = karyawanList.stream()
                 .map(Karyawan::getTernormalisasik2)
                 .mapToDouble(v -> v)
-                .max().orElseThrow(NoSuchElementException::new);
+                .max().orElseThrow(null);
         Double aPlusK3 = karyawanList.stream()
                 .map(Karyawan::getTernormalisasik3)
                 .mapToDouble(v -> v)
-                .max().orElseThrow(NoSuchElementException::new);
+                .max().orElseThrow(null);
         Double aPlusK4 = karyawanList.stream()
                 .map(Karyawan::getTernormalisasik4)
                 .mapToDouble(v -> v)
-                .max().orElseThrow(NoSuchElementException::new);
+                .max().orElseThrow(null);
 
         Double aMinK1 = karyawanList.stream()
                 .map(Karyawan::getTernormalisasik1)
                 .mapToDouble(v -> v)
-                .min().orElseThrow(NoSuchElementException::new);
+                .min().orElseThrow(null);
         Double aMinK2 = karyawanList.stream()
                 .map(Karyawan::getTernormalisasik2)
                 .mapToDouble(v -> v)
-                .min().orElseThrow(NoSuchElementException::new);
+                .min().orElseThrow(null);
         Double aMinK3 = karyawanList.stream()
                 .map(Karyawan::getTernormalisasik3)
                 .mapToDouble(v -> v)
-                .min().orElseThrow(NoSuchElementException::new);
+                .min().orElseThrow(null);
         Double aMinK4 = karyawanList.stream()
                 .map(Karyawan::getTernormalisasik4)
                 .mapToDouble(v -> v)
-                .min().orElseThrow(NoSuchElementException::new);
+                .min().orElseThrow(null);
 
         aPlusMin = new KaryawanAplusMin(aPlusK1, aPlusK2, aPlusK3,aPlusK4, aMinK1,aMinK2,aMinK3, aMinK4);
         aplusminService.save(aPlusMin);
@@ -254,6 +253,7 @@ public class KaryawanService extends AbstractService<Karyawan> {
 
             save(k);
         }
+        }
 
     }
 
@@ -262,9 +262,7 @@ public class KaryawanService extends AbstractService<Karyawan> {
 
         List<Karyawan> karyawanList = findAll();
 
-        for (Karyawan delete : findAll()){
-            deleteById(delete.getId());
-        }
+        deleteAll();
 
         List<Double> k1List = new ArrayList<>();
         List<Double> k2List = new ArrayList<>();
@@ -327,39 +325,40 @@ public class KaryawanService extends AbstractService<Karyawan> {
             k.setTernormalisasik4(roundUp(pembagik4 * 35));
         }
 
-        Double aPlusK1 = karyawanList.stream()
+        if (karyawanList.size() != 0 ){
+            Double aPlusK1 = karyawanList.stream()
                 .map(Karyawan::getTernormalisasik1)
                 .mapToDouble(v -> v)
-                .max().orElseThrow(NoSuchElementException::new);
+                .max().orElseThrow(null);
         Double aPlusK2 = karyawanList.stream()
                 .map(Karyawan::getTernormalisasik2)
                 .mapToDouble(v -> v)
-                .max().orElseThrow(NoSuchElementException::new);
+                .max().orElseThrow(null);
         Double aPlusK3 = karyawanList.stream()
                 .map(Karyawan::getTernormalisasik3)
                 .mapToDouble(v -> v)
-                .max().orElseThrow(NoSuchElementException::new);
+                .max().orElseThrow(null);
         Double aPlusK4 = karyawanList.stream()
                 .map(Karyawan::getTernormalisasik4)
                 .mapToDouble(v -> v)
-                .max().orElseThrow(NoSuchElementException::new);
+                .max().orElseThrow(null);
 
         Double aMinK1 = karyawanList.stream()
                 .map(Karyawan::getTernormalisasik1)
                 .mapToDouble(v -> v)
-                .min().orElseThrow(NoSuchElementException::new);
+                .min().orElseThrow(null);
         Double aMinK2 = karyawanList.stream()
                 .map(Karyawan::getTernormalisasik2)
                 .mapToDouble(v -> v)
-                .min().orElseThrow(NoSuchElementException::new);
+                .min().orElseThrow(null);
         Double aMinK3 = karyawanList.stream()
                 .map(Karyawan::getTernormalisasik3)
                 .mapToDouble(v -> v)
-                .min().orElseThrow(NoSuchElementException::new);
+                .min().orElseThrow(null);
         Double aMinK4 = karyawanList.stream()
                 .map(Karyawan::getTernormalisasik4)
                 .mapToDouble(v -> v)
-                .min().orElseThrow(NoSuchElementException::new);
+                .min().orElseThrow(null);
 
         aPlusMin = new KaryawanAplusMin(aPlusK1, aPlusK2, aPlusK3,aPlusK4, aMinK1,aMinK2,aMinK3, aMinK4);
         aplusminService.save(aPlusMin);
@@ -370,6 +369,7 @@ public class KaryawanService extends AbstractService<Karyawan> {
             k.setPreferensi(roundUp(getDmin(k, aPlusMin) / ( getDmin(k, aPlusMin) + getDplus(k, aPlusMin))));
 
             save(k);
+        }
         }
 
     }

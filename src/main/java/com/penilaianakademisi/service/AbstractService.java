@@ -36,6 +36,11 @@ public class AbstractService<T> implements ServiceInterface<T>{
         return repository.save(entity);
     }
 
+    @Override
+    public void deleteAll() {
+        repository.deleteAll();
+    }
+
     public Double roundUp(Double number){
         return Math.round(number * 1000.0) / 1000.0;
     }

@@ -27,9 +27,7 @@ public class DosenService extends AbstractService<Dosen> {
 
         dosenList.remove(findById(id));
 
-        for (Dosen d : findAll()){
-            deleteById(d.getId());
-        }
+        deleteAll();
 
         List<Double> k1List = new ArrayList<>();
         List<Double> k2List = new ArrayList<>();
@@ -41,7 +39,7 @@ public class DosenService extends AbstractService<Dosen> {
         List<Double> k8List = new ArrayList<>();
         List<Double> k9List = new ArrayList<>();
 
-        for (Dosen d : dosenList){
+        dosenList.forEach(d -> {
             k1List.add(d.getK1());
             k2List.add(d.getK2());
             k3List.add(d.getK3());
@@ -51,7 +49,7 @@ public class DosenService extends AbstractService<Dosen> {
             k7List.add(d.getK7());
             k8List.add(d.getK8());
             k9List.add(d.getK9());
-        }
+        });
 
         double temp = 0.0;
 
@@ -150,7 +148,8 @@ public class DosenService extends AbstractService<Dosen> {
             d.setTernormalisasik9(roundUp(pembagiK9 * 15));
         }
 
-        Double aPlusK1 = dosenList.stream()
+        if  (dosenList.size() != 0 ){
+            Double aPlusK1 = dosenList.stream()
                 .map(Dosen::getTernormalisasik1)
                 .mapToDouble(v -> v)
                 .max().orElseThrow(NoSuchElementException::new);
@@ -234,6 +233,7 @@ public class DosenService extends AbstractService<Dosen> {
 
             save(d);
         }
+        }
     }
 
     public void edit(DosenEdit request) {
@@ -256,9 +256,7 @@ public class DosenService extends AbstractService<Dosen> {
 
         dosenList.set(dosenIndex, dosenEdit);
 
-        for (Dosen d : dosenList){
-            deleteById(d.getId());
-        }
+        deleteAll();
 
         List<Double> k1List = new ArrayList<>();
         List<Double> k2List = new ArrayList<>();
@@ -270,7 +268,7 @@ public class DosenService extends AbstractService<Dosen> {
         List<Double> k8List = new ArrayList<>();
         List<Double> k9List = new ArrayList<>();
 
-        for (Dosen d : dosenList){
+        dosenList.forEach(d -> {
             k1List.add(d.getK1());
             k2List.add(d.getK2());
             k3List.add(d.getK3());
@@ -280,7 +278,7 @@ public class DosenService extends AbstractService<Dosen> {
             k7List.add(d.getK7());
             k8List.add(d.getK8());
             k9List.add(d.getK9());
-        }
+        });
 
         k1List.add(request.getK1());
         k2List.add(request.getK2());
@@ -390,7 +388,8 @@ public class DosenService extends AbstractService<Dosen> {
             d.setTernormalisasik9(roundUp(pembagiK9 * 15));
         }
 
-        Double aPlusK1 = dosenList.stream()
+        if  (dosenList.size() != 0 ){
+            Double aPlusK1 = dosenList.stream()
                 .map(Dosen::getTernormalisasik1)
                 .mapToDouble(v -> v)
                 .max().orElseThrow(NoSuchElementException::new);
@@ -474,15 +473,14 @@ public class DosenService extends AbstractService<Dosen> {
 
             save(d);
         }
-    }
+        }
 
+    }
     public void save(DosenRequest request){
         DosenAplusmin aPlusMin;
         List<Dosen> dosenList = findAll();
 
-        for (Dosen d : dosenList){
-            deleteById(d.getId());
-        }
+        deleteAll();
 
         List<Double> k1List = new ArrayList<>();
         List<Double> k2List = new ArrayList<>();
@@ -494,7 +492,7 @@ public class DosenService extends AbstractService<Dosen> {
         List<Double> k8List = new ArrayList<>();
         List<Double> k9List = new ArrayList<>();
 
-        for (Dosen d : dosenList){
+        dosenList.forEach(d -> {
             k1List.add(d.getK1());
             k2List.add(d.getK2());
             k3List.add(d.getK3());
@@ -504,7 +502,7 @@ public class DosenService extends AbstractService<Dosen> {
             k7List.add(d.getK7());
             k8List.add(d.getK8());
             k9List.add(d.getK9());
-        }
+        });
 
         k1List.add(request.getK1());
         k2List.add(request.getK2());
@@ -615,89 +613,91 @@ public class DosenService extends AbstractService<Dosen> {
             d.setTernormalisasik9(roundUp(pembagiK9 * 15));
         }
 
-        Double aPlusK1 = dosenList.stream()
-                .map(Dosen::getTernormalisasik1)
-                .mapToDouble(v -> v)
-                .max().orElseThrow(NoSuchElementException::new);
-        Double aPlusK2 = dosenList.stream()
-                .map(Dosen::getTernormalisasik2)
-                .mapToDouble(v -> v)
-                .max().orElseThrow(NoSuchElementException::new);
-        Double aPlusK3 = dosenList.stream()
-                .map(Dosen::getTernormalisasik3)
-                .mapToDouble(v -> v)
-                .max().orElseThrow(NoSuchElementException::new);
-        Double aPlusK4 = dosenList.stream()
-                .map(Dosen::getTernormalisasik4)
-                .mapToDouble(v -> v)
-                .max().orElseThrow(NoSuchElementException::new);
-        Double aPlusK5 = dosenList.stream()
-                .map(Dosen::getTernormalisasik5)
-                .mapToDouble(v -> v)
-                .max().orElseThrow(NoSuchElementException::new);
-        Double aPlusK6 = dosenList.stream()
-                .map(Dosen::getTernormalisasik6)
-                .mapToDouble(v -> v)
-                .max().orElseThrow(NoSuchElementException::new);
-        Double aPlusK7 = dosenList.stream()
-                .map(Dosen::getTernormalisasik7)
-                .mapToDouble(v -> v)
-                .max().orElseThrow(NoSuchElementException::new);
-        Double aPlusK8 = dosenList.stream()
-                .map(Dosen::getTernormalisasik8)
-                .mapToDouble(v -> v)
-                .max().orElseThrow(NoSuchElementException::new);
-        Double aPlusK9 = dosenList.stream()
-                .map(Dosen::getTernormalisasik9)
-                .mapToDouble(v -> v)
-                .max().orElseThrow(NoSuchElementException::new);
+        if (dosenList.size() != 0 ) {
+            Double aPlusK1 = dosenList.stream()
+                    .map(Dosen::getTernormalisasik1)
+                    .mapToDouble(v -> v)
+                    .max().orElseThrow(NoSuchElementException::new);
+            Double aPlusK2 = dosenList.stream()
+                    .map(Dosen::getTernormalisasik2)
+                    .mapToDouble(v -> v)
+                    .max().orElseThrow(NoSuchElementException::new);
+            Double aPlusK3 = dosenList.stream()
+                    .map(Dosen::getTernormalisasik3)
+                    .mapToDouble(v -> v)
+                    .max().orElseThrow(NoSuchElementException::new);
+            Double aPlusK4 = dosenList.stream()
+                    .map(Dosen::getTernormalisasik4)
+                    .mapToDouble(v -> v)
+                    .max().orElseThrow(NoSuchElementException::new);
+            Double aPlusK5 = dosenList.stream()
+                    .map(Dosen::getTernormalisasik5)
+                    .mapToDouble(v -> v)
+                    .max().orElseThrow(NoSuchElementException::new);
+            Double aPlusK6 = dosenList.stream()
+                    .map(Dosen::getTernormalisasik6)
+                    .mapToDouble(v -> v)
+                    .max().orElseThrow(NoSuchElementException::new);
+            Double aPlusK7 = dosenList.stream()
+                    .map(Dosen::getTernormalisasik7)
+                    .mapToDouble(v -> v)
+                    .max().orElseThrow(NoSuchElementException::new);
+            Double aPlusK8 = dosenList.stream()
+                    .map(Dosen::getTernormalisasik8)
+                    .mapToDouble(v -> v)
+                    .max().orElseThrow(NoSuchElementException::new);
+            Double aPlusK9 = dosenList.stream()
+                    .map(Dosen::getTernormalisasik9)
+                    .mapToDouble(v -> v)
+                    .max().orElseThrow(NoSuchElementException::new);
 
-        Double aMinK1 = dosenList.stream()
-                .map(Dosen::getTernormalisasik1)
-                .mapToDouble(v -> v)
-                .min().orElseThrow(NoSuchElementException::new);
-        Double aMinK2 = dosenList.stream()
-                .map(Dosen::getTernormalisasik2)
-                .mapToDouble(v -> v)
-                .min().orElseThrow(NoSuchElementException::new);
-        Double aMinK3 = dosenList.stream()
-                .map(Dosen::getTernormalisasik3)
-                .mapToDouble(v -> v)
-                .min().orElseThrow(NoSuchElementException::new);
-        Double aMinK4 = dosenList.stream()
-                .map(Dosen::getTernormalisasik4)
-                .mapToDouble(v -> v)
-                .min().orElseThrow(NoSuchElementException::new);
-        Double aMinK5 = dosenList.stream()
-                .map(Dosen::getTernormalisasik5)
-                .mapToDouble(v -> v)
-                .min().orElseThrow(NoSuchElementException::new);
-        Double aMinK6 = dosenList.stream()
-                .map(Dosen::getTernormalisasik6)
-                .mapToDouble(v -> v)
-                .min().orElseThrow(NoSuchElementException::new);
-        Double aMinK7 = dosenList.stream()
-                .map(Dosen::getTernormalisasik7)
-                .mapToDouble(v -> v)
-                .min().orElseThrow(NoSuchElementException::new);
-        Double aMinK8 = dosenList.stream()
-                .map(Dosen::getTernormalisasik8)
-                .mapToDouble(v -> v)
-                .min().orElseThrow(NoSuchElementException::new);
-        Double aMinK9 = dosenList.stream()
-                .map(Dosen::getTernormalisasik9)
-                .mapToDouble(v -> v)
-                .min().orElseThrow(NoSuchElementException::new);
+            Double aMinK1 = dosenList.stream()
+                    .map(Dosen::getTernormalisasik1)
+                    .mapToDouble(v -> v)
+                    .min().orElseThrow(NoSuchElementException::new);
+            Double aMinK2 = dosenList.stream()
+                    .map(Dosen::getTernormalisasik2)
+                    .mapToDouble(v -> v)
+                    .min().orElseThrow(NoSuchElementException::new);
+            Double aMinK3 = dosenList.stream()
+                    .map(Dosen::getTernormalisasik3)
+                    .mapToDouble(v -> v)
+                    .min().orElseThrow(NoSuchElementException::new);
+            Double aMinK4 = dosenList.stream()
+                    .map(Dosen::getTernormalisasik4)
+                    .mapToDouble(v -> v)
+                    .min().orElseThrow(NoSuchElementException::new);
+            Double aMinK5 = dosenList.stream()
+                    .map(Dosen::getTernormalisasik5)
+                    .mapToDouble(v -> v)
+                    .min().orElseThrow(NoSuchElementException::new);
+            Double aMinK6 = dosenList.stream()
+                    .map(Dosen::getTernormalisasik6)
+                    .mapToDouble(v -> v)
+                    .min().orElseThrow(NoSuchElementException::new);
+            Double aMinK7 = dosenList.stream()
+                    .map(Dosen::getTernormalisasik7)
+                    .mapToDouble(v -> v)
+                    .min().orElseThrow(NoSuchElementException::new);
+            Double aMinK8 = dosenList.stream()
+                    .map(Dosen::getTernormalisasik8)
+                    .mapToDouble(v -> v)
+                    .min().orElseThrow(NoSuchElementException::new);
+            Double aMinK9 = dosenList.stream()
+                    .map(Dosen::getTernormalisasik9)
+                    .mapToDouble(v -> v)
+                    .min().orElseThrow(NoSuchElementException::new);
 
-        aPlusMin = new DosenAplusmin(aPlusK1, aPlusK2, aPlusK3, aPlusK4, aPlusK5, aPlusK6, aPlusK7, aPlusK8, aPlusK9, aMinK1, aMinK2, aMinK3, aMinK4, aMinK5, aMinK6,aMinK7, aMinK8, aMinK9);
-        aPlusMinService.save(aPlusMin);
+            aPlusMin = new DosenAplusmin(aPlusK1, aPlusK2, aPlusK3, aPlusK4, aPlusK5, aPlusK6, aPlusK7, aPlusK8, aPlusK9, aMinK1, aMinK2, aMinK3, aMinK4, aMinK5, aMinK6,aMinK7, aMinK8, aMinK9);
+            aPlusMinService.save(aPlusMin);
 
-        for (Dosen d : dosenList){
-            d.setDPlus(roundUp(getDplus(d, aPlusMin)));
-            d.setDMin(roundUp(getDmin(d, aPlusMin)));
-            d.setPreferensi(roundUp((getDmin(d, aPlusMin)) / (d.getDPlus() + d.getDMin()) ));
+            for (Dosen d : dosenList){
+                d.setDPlus(roundUp(getDplus(d, aPlusMin)));
+                d.setDMin(roundUp(getDmin(d, aPlusMin)));
+                d.setPreferensi(roundUp((getDmin(d, aPlusMin)) / (d.getDPlus() + d.getDMin()) ));
 
-            save(d);
+                save(d);
+            }
         }
     }
 

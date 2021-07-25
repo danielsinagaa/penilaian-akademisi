@@ -26,9 +26,7 @@ public class MahasiswaService extends AbstractService<Mahasiswa> {
 
         mahasiswaList.remove(findById(id));
 
-        for (Mahasiswa m : findAll()){
-            deleteById(m.getId());
-        }
+        deleteAll();
 
         List<Double> k1List = new ArrayList<>();
         List<Double> k2List = new ArrayList<>();
@@ -37,14 +35,14 @@ public class MahasiswaService extends AbstractService<Mahasiswa> {
         List<Double> k5List = new ArrayList<>();
         List<Double> k6List = new ArrayList<>();
 
-        for (Mahasiswa m : mahasiswaList){
+        mahasiswaList.forEach(m -> {
             k1List.add(m.getK1());
             k2List.add(m.getK2());
             k3List.add(m.getK3());
             k4List.add(m.getK4());
             k5List.add(m.getK5());
             k6List.add(m.getK6());
-        }
+        });
 
         double temp = 0.0;
 
@@ -105,55 +103,56 @@ public class MahasiswaService extends AbstractService<Mahasiswa> {
             m.setTernormalisasik6(roundUp(m.getPembagik6() * 5));
         }
 
-        Double aPlusK1 = mahasiswaList.stream()
+        if (mahasiswaList.size() != 0 ){
+            Double aPlusK1 = mahasiswaList.stream()
                 .map(Mahasiswa::getTernormalisasik1)
                 .mapToDouble(v -> v)
-                .max().orElseThrow(NoSuchElementException::new);
+                .max().orElseThrow(null);
         Double aPlusK2 = mahasiswaList.stream()
                 .map(Mahasiswa::getTernormalisasik2)
                 .mapToDouble(v -> v)
-                .max().orElseThrow(NoSuchElementException::new);
+                .max().orElseThrow(null);
         Double aPlusK3 = mahasiswaList.stream()
                 .map(Mahasiswa::getTernormalisasik3)
                 .mapToDouble(v -> v)
-                .max().orElseThrow(NoSuchElementException::new);
+                .max().orElseThrow(null);
         Double aPlusK4 = mahasiswaList.stream()
                 .map(Mahasiswa::getTernormalisasik4)
                 .mapToDouble(v -> v)
-                .max().orElseThrow(NoSuchElementException::new);
+                .max().orElseThrow(null);
         Double aPlusK5 = mahasiswaList.stream()
                 .map(Mahasiswa::getTernormalisasik5)
                 .mapToDouble(v -> v)
-                .max().orElseThrow(NoSuchElementException::new);
+                .max().orElseThrow(null);
         Double aPlusK6 = mahasiswaList.stream()
                 .map(Mahasiswa::getTernormalisasik6)
                 .mapToDouble(v -> v)
-                .max().orElseThrow(NoSuchElementException::new);
+                .max().orElseThrow(null);
 
         Double aMinK1 = mahasiswaList.stream()
                 .map(Mahasiswa::getTernormalisasik1)
                 .mapToDouble(v -> v)
-                .min().orElseThrow(NoSuchElementException::new);
+                .min().orElseThrow(null);
         Double aMinK2 = mahasiswaList.stream()
                 .map(Mahasiswa::getTernormalisasik2)
                 .mapToDouble(v -> v)
-                .min().orElseThrow(NoSuchElementException::new);
+                .min().orElseThrow(null);
         Double aMinK3 = mahasiswaList.stream()
                 .map(Mahasiswa::getTernormalisasik3)
                 .mapToDouble(v -> v)
-                .min().orElseThrow(NoSuchElementException::new);
+                .min().orElseThrow(null);
         Double aMinK4 = mahasiswaList.stream()
                 .map(Mahasiswa::getTernormalisasik4)
                 .mapToDouble(v -> v)
-                .min().orElseThrow(NoSuchElementException::new);
+                .min().orElseThrow(null);
         Double aMinK5 = mahasiswaList.stream()
                 .map(Mahasiswa::getTernormalisasik5)
                 .mapToDouble(v -> v)
-                .min().orElseThrow(NoSuchElementException::new);
+                .min().orElseThrow(null);
         Double aMinK6 = mahasiswaList.stream()
                 .map(Mahasiswa::getTernormalisasik6)
                 .mapToDouble(v -> v)
-                .min().orElseThrow(NoSuchElementException::new);
+                .min().orElseThrow(null);
 
         aPlusMin = new MahasiswaAplusMin(aPlusK1, aPlusK2, aPlusK3, aPlusK4, aPlusK5, aPlusK6, aMinK1, aMinK2, aMinK3, aMinK4, aMinK5, aMinK6);
         aPlusMinService.save(aPlusMin);
@@ -164,6 +163,7 @@ public class MahasiswaService extends AbstractService<Mahasiswa> {
             m.setPreferensi(roundUp(m.getDMin() / (m.getDMin() + m.getDPlus())));
 
             save(m);
+        }
         }
     }
 
@@ -184,9 +184,7 @@ public class MahasiswaService extends AbstractService<Mahasiswa> {
 
         mahasiswaList.set(mahasiswaIndex, mahasiswaEdit);
 
-        for (Mahasiswa m : mahasiswaList){
-            deleteById(m.getId());
-        }
+        deleteAll();
 
         List<Double> k1List = new ArrayList<>();
         List<Double> k2List = new ArrayList<>();
@@ -195,14 +193,14 @@ public class MahasiswaService extends AbstractService<Mahasiswa> {
         List<Double> k5List = new ArrayList<>();
         List<Double> k6List = new ArrayList<>();
 
-        for (Mahasiswa m : mahasiswaList){
+        mahasiswaList.forEach(m -> {
             k1List.add(m.getK1());
             k2List.add(m.getK2());
             k3List.add(m.getK3());
             k4List.add(m.getK4());
             k5List.add(m.getK5());
             k6List.add(m.getK6());
-        }
+        });
 
         k1List.add(request.getK1());
         k2List.add(request.getK2());
@@ -270,55 +268,56 @@ public class MahasiswaService extends AbstractService<Mahasiswa> {
             m.setTernormalisasik6(roundUp(m.getPembagik6() * 5));
         }
 
-        Double aPlusK1 = mahasiswaList.stream()
+        if (mahasiswaList.size() != 0 ){
+            Double aPlusK1 = mahasiswaList.stream()
                 .map(Mahasiswa::getTernormalisasik1)
                 .mapToDouble(v -> v)
-                .max().orElseThrow(NoSuchElementException::new);
+                .max().orElseThrow(null);
         Double aPlusK2 = mahasiswaList.stream()
                 .map(Mahasiswa::getTernormalisasik2)
                 .mapToDouble(v -> v)
-                .max().orElseThrow(NoSuchElementException::new);
+                .max().orElseThrow(null);
         Double aPlusK3 = mahasiswaList.stream()
                 .map(Mahasiswa::getTernormalisasik3)
                 .mapToDouble(v -> v)
-                .max().orElseThrow(NoSuchElementException::new);
+                .max().orElseThrow(null);
         Double aPlusK4 = mahasiswaList.stream()
                 .map(Mahasiswa::getTernormalisasik4)
                 .mapToDouble(v -> v)
-                .max().orElseThrow(NoSuchElementException::new);
+                .max().orElseThrow(null);
         Double aPlusK5 = mahasiswaList.stream()
                 .map(Mahasiswa::getTernormalisasik5)
                 .mapToDouble(v -> v)
-                .max().orElseThrow(NoSuchElementException::new);
+                .max().orElseThrow(null);
         Double aPlusK6 = mahasiswaList.stream()
                 .map(Mahasiswa::getTernormalisasik6)
                 .mapToDouble(v -> v)
-                .max().orElseThrow(NoSuchElementException::new);
+                .max().orElseThrow(null);
 
         Double aMinK1 = mahasiswaList.stream()
                 .map(Mahasiswa::getTernormalisasik1)
                 .mapToDouble(v -> v)
-                .min().orElseThrow(NoSuchElementException::new);
+                .min().orElseThrow(null);
         Double aMinK2 = mahasiswaList.stream()
                 .map(Mahasiswa::getTernormalisasik2)
                 .mapToDouble(v -> v)
-                .min().orElseThrow(NoSuchElementException::new);
+                .min().orElseThrow(null);
         Double aMinK3 = mahasiswaList.stream()
                 .map(Mahasiswa::getTernormalisasik3)
                 .mapToDouble(v -> v)
-                .min().orElseThrow(NoSuchElementException::new);
+                .min().orElseThrow(null);
         Double aMinK4 = mahasiswaList.stream()
                 .map(Mahasiswa::getTernormalisasik4)
                 .mapToDouble(v -> v)
-                .min().orElseThrow(NoSuchElementException::new);
+                .min().orElseThrow(null);
         Double aMinK5 = mahasiswaList.stream()
                 .map(Mahasiswa::getTernormalisasik5)
                 .mapToDouble(v -> v)
-                .min().orElseThrow(NoSuchElementException::new);
+                .min().orElseThrow(null);
         Double aMinK6 = mahasiswaList.stream()
                 .map(Mahasiswa::getTernormalisasik6)
                 .mapToDouble(v -> v)
-                .min().orElseThrow(NoSuchElementException::new);
+                .min().orElseThrow(null);
 
         aPlusMin = new MahasiswaAplusMin(aPlusK1, aPlusK2, aPlusK3, aPlusK4, aPlusK5, aPlusK6, aMinK1, aMinK2, aMinK3, aMinK4, aMinK5, aMinK6);
         aPlusMinService.save(aPlusMin);
@@ -330,15 +329,15 @@ public class MahasiswaService extends AbstractService<Mahasiswa> {
 
             save(m);
         }
-    }
+        }
 
+
+    }
     public void save(MahasiswaRequest request){
         MahasiswaAplusMin aPlusMin;
         List<Mahasiswa> mahasiswaList = findAll();
 
-        for (Mahasiswa m : mahasiswaList){
-            deleteById(m.getId());
-        }
+        deleteAll();
 
         List<Double> k1List = new ArrayList<>();
         List<Double> k2List = new ArrayList<>();
@@ -347,14 +346,14 @@ public class MahasiswaService extends AbstractService<Mahasiswa> {
         List<Double> k5List = new ArrayList<>();
         List<Double> k6List = new ArrayList<>();
 
-        for (Mahasiswa m : mahasiswaList){
+        mahasiswaList.forEach(m -> {
             k1List.add(m.getK1());
             k2List.add(m.getK2());
             k3List.add(m.getK3());
             k4List.add(m.getK4());
             k5List.add(m.getK5());
             k6List.add(m.getK6());
-        }
+        });
 
         k1List.add(request.getK1());
         k2List.add(request.getK2());
@@ -424,55 +423,56 @@ public class MahasiswaService extends AbstractService<Mahasiswa> {
             m.setTernormalisasik6(roundUp(m.getPembagik6() * 5));
         }
 
-        Double aPlusK1 = mahasiswaList.stream()
+        if (mahasiswaList.size() != 0 ){
+            Double aPlusK1 = mahasiswaList.stream()
                 .map(Mahasiswa::getTernormalisasik1)
                 .mapToDouble(v -> v)
-                .max().orElseThrow(NoSuchElementException::new);
+                .max().orElseThrow(null);
         Double aPlusK2 = mahasiswaList.stream()
                 .map(Mahasiswa::getTernormalisasik2)
                 .mapToDouble(v -> v)
-                .max().orElseThrow(NoSuchElementException::new);
+                .max().orElseThrow(null);
         Double aPlusK3 = mahasiswaList.stream()
                 .map(Mahasiswa::getTernormalisasik3)
                 .mapToDouble(v -> v)
-                .max().orElseThrow(NoSuchElementException::new);
+                .max().orElseThrow(null);
         Double aPlusK4 = mahasiswaList.stream()
                 .map(Mahasiswa::getTernormalisasik4)
                 .mapToDouble(v -> v)
-                .max().orElseThrow(NoSuchElementException::new);
+                .max().orElseThrow(null);
         Double aPlusK5 = mahasiswaList.stream()
                 .map(Mahasiswa::getTernormalisasik5)
                 .mapToDouble(v -> v)
-                .max().orElseThrow(NoSuchElementException::new);
+                .max().orElseThrow(null);
         Double aPlusK6 = mahasiswaList.stream()
                 .map(Mahasiswa::getTernormalisasik6)
                 .mapToDouble(v -> v)
-                .max().orElseThrow(NoSuchElementException::new);
+                .max().orElseThrow(null);
 
         Double aMinK1 = mahasiswaList.stream()
                 .map(Mahasiswa::getTernormalisasik1)
                 .mapToDouble(v -> v)
-                .min().orElseThrow(NoSuchElementException::new);
+                .min().orElseThrow(null);
         Double aMinK2 = mahasiswaList.stream()
                 .map(Mahasiswa::getTernormalisasik2)
                 .mapToDouble(v -> v)
-                .min().orElseThrow(NoSuchElementException::new);
+                .min().orElseThrow(null);
         Double aMinK3 = mahasiswaList.stream()
                 .map(Mahasiswa::getTernormalisasik3)
                 .mapToDouble(v -> v)
-                .min().orElseThrow(NoSuchElementException::new);
+                .min().orElseThrow(null);
         Double aMinK4 = mahasiswaList.stream()
                 .map(Mahasiswa::getTernormalisasik4)
                 .mapToDouble(v -> v)
-                .min().orElseThrow(NoSuchElementException::new);
+                .min().orElseThrow(null);
         Double aMinK5 = mahasiswaList.stream()
                 .map(Mahasiswa::getTernormalisasik5)
                 .mapToDouble(v -> v)
-                .min().orElseThrow(NoSuchElementException::new);
+                .min().orElseThrow(null);
         Double aMinK6 = mahasiswaList.stream()
                 .map(Mahasiswa::getTernormalisasik6)
                 .mapToDouble(v -> v)
-                .min().orElseThrow(NoSuchElementException::new);
+                .min().orElseThrow(null);
 
         aPlusMin = new MahasiswaAplusMin(aPlusK1, aPlusK2, aPlusK3, aPlusK4, aPlusK5, aPlusK6, aMinK1, aMinK2, aMinK3, aMinK4, aMinK5, aMinK6);
         aPlusMinService.save(aPlusMin);
@@ -483,6 +483,7 @@ public class MahasiswaService extends AbstractService<Mahasiswa> {
             m.setPreferensi(roundUp(m.getDMin() / (m.getDMin() + m.getDPlus())));
 
             save(m);
+        }
         }
 
     }

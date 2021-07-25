@@ -375,6 +375,11 @@ public class AppController {
         }
 
         dosenService.delete(id);
+
+        if (dosenService.findAll().size() == 0){
+            return "list_dosen_empty";
+        }
+
         return "redirect:/dosen";
     }
 
@@ -388,6 +393,11 @@ public class AppController {
         }
 
         mahasiswaService.delete(id);
+
+        if (mahasiswaService.findAll().size() == 0){
+            return "list_mahasiswa_empty";
+        }
+
         return "redirect:/mahasiswa";
     }
 
@@ -401,6 +411,11 @@ public class AppController {
         }
 
         karyawanService.delete(id);
+
+        if (karyawanService.findAll().size() == 0){
+            return "list_karyawan_empty";
+        }
+
         return "redirect:/karyawan";
     }
 

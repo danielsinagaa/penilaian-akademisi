@@ -7,4 +7,5 @@ public interface ServiceInterface<T> {
     List<T> findAll();
     T deleteById(String id);
     T save(T entity);
+    void deleteAll();
 }
