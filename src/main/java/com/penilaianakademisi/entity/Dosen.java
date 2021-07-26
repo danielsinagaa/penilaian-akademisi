@@ -134,4 +134,15 @@ public class Dosen extends Timestamp {
         }
         return diff;
     }
+
+    public int compareNameTo(Dosen t) {
+        if (equals(t)) {
+            return 0;
+        }
+        int diff = ( t.getNama()).compareTo(this.nama);
+        if (diff == 0) {
+            return ( t.preferensi).compareTo(this.preferensi);
+        }
+        return diff;
+    }
 }

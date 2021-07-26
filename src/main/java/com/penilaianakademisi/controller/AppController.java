@@ -6,15 +6,19 @@ import com.penilaianakademisi.entity.excel.KaryawanReportExcel;
 import com.penilaianakademisi.entity.excel.MahasiswaReportExcel;
 import com.penilaianakademisi.entity.model.*;
 import com.penilaianakademisi.service.*;
+import org.apache.poi.xssf.usermodel.XSSFCell;
+import org.apache.poi.xssf.usermodel.XSSFRow;
+import org.apache.poi.xssf.usermodel.XSSFSheet;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletResponse;
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -41,6 +45,165 @@ public class AppController {
     private KaryawanAplusminService karyawanAplusminService;
 
     private Login userLogin = new Login("admin","password",true,"");
+
+    private final String baseDir = "/Users/macbook/Documents/dedek/src/main/resources/static/upload";
+
+    @PostMapping("/upload/dosen")
+    public String uploadDosen(@RequestParam("file") MultipartFile file) throws IOException {
+        file.transferTo(new File(baseDir, "excelData.xlsx"));
+
+        FileInputStream inputStream = new FileInputStream(baseDir + "/excelData.xlsx");
+
+        XSSFWorkbook workbook = new XSSFWorkbook(inputStream);
+        XSSFSheet sheet = workbook.getSheetAt(0);
+
+        int lastRow = sheet.getLastRowNum();
+        int lastCell = sheet.getRow(1).getLastCellNum();
+
+        if (lastCell != 11 ){
+            return "redirect:/detail_dosen";
+        }
+
+        importDosenExcel(sheet, lastRow, lastCell);
+
+        return "redirect:/detail_dosen";
+    }
+
+    @PostMapping("/upload/mahasiswa")
+    public String uploadMahasiswa(@RequestParam("file") MultipartFile file) throws IOException {
+        file.transferTo(new File(baseDir, "excelData.xlsx"));
+
+        FileInputStream inputStream = new FileInputStream(baseDir + "/excelData.xlsx");
+
+        XSSFWorkbook workbook = new XSSFWorkbook(inputStream);
+        XSSFSheet sheet = workbook.getSheetAt(0);
+
+        int lastRow = sheet.getLastRowNum();
+        int lastCell = sheet.getRow(1).getLastCellNum();
+
+        if (lastCell != 8 ){
+            return "redirect:/test";
+        }
+
+        importMahasiswaExcel(sheet, lastRow, lastCell);
+
+        return "redirect:/test";
+    }
+
+    @PostMapping("/upload/karyawan")
+    public String uploadKaryawan(@RequestParam("file") MultipartFile file) throws IOException {
+        file.transferTo(new File(baseDir, "excelData.xlsx"));
+
+        FileInputStream inputStream = new FileInputStream(baseDir + "/excelData.xlsx");
+
+        XSSFWorkbook workbook = new XSSFWorkbook(inputStream);
+        XSSFSheet sheet = workbook.getSheetAt(0);
+
+        int lastRow = sheet.getLastRowNum();
+        int lastCell = sheet.getRow(1).getLastCellNum();
+
+        System.out.println("=======================");
+        System.out.println(lastCell);
+
+        if (lastCell != 6){
+            return "redirect:/test";
+        }
+
+        importKaryawanExcel(sheet, lastRow, lastCell);
+
+        return "redirect:/test";
+    }
+
+    private void importDosenExcel(XSSFSheet sheet, int lastRow, int lastCell) {
+        for (int i = 1; i <= lastRow; i++){
+            DosenRequest dosenRequest = new DosenRequest();
+            XSSFRow row = sheet.getRow(i);
+
+            System.out.print(i + ". || ");
+            for (int c = 1; c <= lastCell; c++){
+
+                XSSFCell cell = row.getCell(c);
+
+                if (c == 1){
+                    dosenRequest.setNama(cell.getStringCellValue());
+                } else if (c == 2){
+                    dosenRequest.setK1(cell.getNumericCellValue());
+                } else if (c == 3){
+                    dosenRequest.setK2(cell.getNumericCellValue());
+                } else if (c == 4){
+                    dosenRequest.setK3(cell.getNumericCellValue());
+                } else if (c == 5){
+                    dosenRequest.setK4(cell.getNumericCellValue());
+                } else if (c == 6){
+                    dosenRequest.setK5(cell.getNumericCellValue());
+                } else if (c == 7){
+                    dosenRequest.setK6(cell.getNumericCellValue());
+                } else if (c == 8){
+                    dosenRequest.setK7(cell.getNumericCellValue());
+                } else if (c == 9){
+                    dosenRequest.setK8(cell.getNumericCellValue());
+                } else if (c == 10){
+                    dosenRequest.setK9(cell.getNumericCellValue());
+                }
+            }
+            dosenService.save(dosenRequest);
+        }
+    }
+
+    private void importMahasiswaExcel(XSSFSheet sheet, int lastRow, int lastCell) {
+        for (int i = 1; i <= lastRow; i++){
+            MahasiswaRequest request = new MahasiswaRequest();
+            XSSFRow row = sheet.getRow(i);
+
+            System.out.print(i + ". || ");
+            for (int c = 1; c <= lastCell; c++){
+
+                XSSFCell cell = row.getCell(c);
+
+                if (c == 1){
+                    request.setNama(cell.getStringCellValue());
+                } else if (c == 2){
+                    request.setK1(cell.getNumericCellValue());
+                } else if (c == 3){
+                    request.setK2(cell.getNumericCellValue());
+                } else if (c == 4){
+                    request.setK3(cell.getNumericCellValue());
+                } else if (c == 5){
+                    request.setK4(cell.getNumericCellValue());
+                } else if (c == 6){
+                    request.setK5(cell.getNumericCellValue());
+                } else if (c == 7){
+                    request.setK6(cell.getNumericCellValue());
+                }
+            }
+            mahasiswaService.save(request);
+        }
+    }
+
+    private void importKaryawanExcel(XSSFSheet sheet, int lastRow, int lastCell) {
+        for (int i = 1; i <= lastRow; i++){
+            KaryawanRequest request = new KaryawanRequest();
+            XSSFRow row = sheet.getRow(i);
+
+            for (int c = 1; c <= lastCell; c++){
+
+                XSSFCell cell = row.getCell(c);
+
+                if (c == 1){
+                    request.setNama(cell.getStringCellValue());
+                } else if (c == 2){
+                    request.setK1(cell.getNumericCellValue());
+                } else if (c == 3){
+                    request.setK2(cell.getNumericCellValue());
+                } else if (c == 4){
+                    request.setK3(cell.getNumericCellValue());
+                } else if (c == 5){
+                    request.setK4(cell.getNumericCellValue());
+                }
+            }
+            karyawanService.save(request);
+        }
+    }
 
     @GetMapping("/login")
     public String login(Model model) {
@@ -105,7 +268,7 @@ public class AppController {
             return "list_karyawan_empty";
         }
         model.addAttribute("karyawanList", karyawanService.findAll());
-        model.addAttribute("aPlusMin", karyawanAplusminService.findAll());
+        model.addAttribute("aPlusMin", karyawanAplusminService.findAll().get(0));
         return "list_karyawan";
     }
 
@@ -118,16 +281,19 @@ public class AppController {
             return "login_page";
         }
         SortedSet<Karyawan> sortedKaryawan = new TreeSet<>(new KaryawanComparator());
-        Set<Karyawan> karyawanSet = new HashSet<>(karyawanService.findAll());
+        SortedSet<Karyawan> karyawanSet = new TreeSet<>(new KaryawanComparatorName().reversed());
         KaryawanAplusMin aPlusMin = new KaryawanAplusMin();
 
         if (karyawanAplusminService.findAll().size() != 0){
             aPlusMin = karyawanAplusminService.findAll().get(0);
         }
 
-        karyawanSet.forEach(it -> sortedKaryawan.add(it));
+        karyawanService.findAll().forEach(it -> {
+            sortedKaryawan.add(it);
+            karyawanSet.add(it);
+        });
 
-        model.addAttribute("karyawanList", karyawanService.findAll());
+        model.addAttribute("karyawanList", karyawanSet);
         model.addAttribute("sortedKaryawanList", sortedKaryawan);
         model.addAttribute("aPlusMin", aPlusMin);
         return "detail_karyawan";
@@ -142,19 +308,19 @@ public class AppController {
             return "login_page";
         }
         SortedSet<Mahasiswa> sortedMahasiswa = new TreeSet<>(new MahasiswaComparator());
-        Set<Mahasiswa> mahasiswaSet = new HashSet<>(mahasiswaService.findAll());
+        SortedSet<Mahasiswa> mahasiswaSet = new TreeSet<> (new MahasiswaComparatorName().reversed());
         MahasiswaAplusMin aPlusMin = new MahasiswaAplusMin();
 
         if (mahasiswaaplusminService.findAll().size() != 0){
             aPlusMin = mahasiswaaplusminService.findAll().get(0);
         }
 
-        mahasiswaSet.forEach(it -> {
-            System.out.println(it.toString());
+        mahasiswaService.findAll().forEach(it -> {
+            mahasiswaSet.add(it);
             sortedMahasiswa.add(it);
         });
 
-        model.addAttribute("mahasiswaList", mahasiswaService.findAll());
+        model.addAttribute("mahasiswaList", mahasiswaSet);
         model.addAttribute("sortedMahasiswaList", sortedMahasiswa);
         model.addAttribute("aPlusMin", aPlusMin);
         return "detail_mahasiswa";
@@ -169,16 +335,19 @@ public class AppController {
             return "login_page";
         }
         SortedSet<Dosen> sortedDosen = new TreeSet<>(new DosenComparator());
-        Set<Dosen> dosenSet = new HashSet<>(dosenService.findAll());
+        SortedSet<Dosen> dosenSet = new TreeSet<>(new DosenComparatorName().reversed());
         DosenAplusmin aPlusMin = new DosenAplusmin();
 
         if (dosenAplusminService.findAll().size() != 0){
             aPlusMin = dosenAplusminService.findAll().get(0);
         }
 
-        dosenSet.forEach(it -> sortedDosen.add(it));
+        dosenService.findAll().forEach(it -> {
+            sortedDosen.add(it);
+            dosenSet.add(it);
+        });
 
-        model.addAttribute("dosenList", dosenService.findAll());
+        model.addAttribute("dosenList", dosenSet);
         model.addAttribute("sortedDosenList", sortedDosen);
         model.addAttribute("aPlusMin", aPlusMin);
         return "detail_dosen";
@@ -375,11 +544,17 @@ public class AppController {
         }
 
         dosenService.delete(id);
+<<<<<<< HEAD
 
         if (dosenService.findAll().size() == 0){
             return "list_dosen_empty";
         }
 
+=======
+        if (dosenService.findAll().size() == 0 ){
+            return "list_dosen_empty";
+        }
+>>>>>>> 73b7d1e22212f70ab60e54b2e9e3cbb044834cc5
         return "redirect:/dosen";
     }
 
@@ -394,10 +569,17 @@ public class AppController {
 
         mahasiswaService.delete(id);
 
+<<<<<<< HEAD
         if (mahasiswaService.findAll().size() == 0){
             return "list_mahasiswa_empty";
         }
 
+=======
+        mahasiswaService.delete(id);
+        if (mahasiswaService.findAll().size() == 0 ){
+            return "list_mahasiswa_empty";
+        }
+>>>>>>> 73b7d1e22212f70ab60e54b2e9e3cbb044834cc5
         return "redirect:/mahasiswa";
     }
 
@@ -412,10 +594,17 @@ public class AppController {
 
         karyawanService.delete(id);
 
+<<<<<<< HEAD
         if (karyawanService.findAll().size() == 0){
             return "list_karyawan_empty";
         }
 
+=======
+        karyawanService.delete(id);
+        if (karyawanService.findAll().size() == 0 ){
+            return "list_karyawan_empty";
+        }
+>>>>>>> 73b7d1e22212f70ab60e54b2e9e3cbb044834cc5
         return "redirect:/karyawan";
     }
 
