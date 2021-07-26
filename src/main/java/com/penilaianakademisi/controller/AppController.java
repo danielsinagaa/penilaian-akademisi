@@ -40,7 +40,7 @@ public class AppController {
     @Autowired
     private KaryawanAplusminService karyawanAplusminService;
 
-    private Login userLogin = new Login("admin","password",false,"");
+    private Login userLogin = new Login("admin","password",true,"");
 
     @GetMapping("/login")
     public String login(Model model) {
