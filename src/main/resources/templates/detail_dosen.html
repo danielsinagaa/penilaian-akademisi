@@ -55,6 +55,12 @@
         <div style="border-radius: 7px; background-color: #A7C4BC; width: 70vw; text-align: center; padding-top: 1vh; padding-bottom: 1vh; margin-top: 3vh; margin-bottom: 3vh">
             <h3 style="margin-top: 5vh">Deskripsi</h3>
 
+            <div style="margin-right: 10vh; text-align: right; position: relative; ">
+                <a th:href="@{/updateDescDosen}" class="btn btn-sm mb-3" style="background-color: #DEEEEA; color: white">
+                    <img src="../static/images/edit.png" th:src="@{/images/edit.png}" width="30" class="rounded mx-auto" >
+                </a>
+            </div>
+
             <table class="table table-striped table-hover table-sm" style="width: 85%; margin-left: auto; margin-right: auto; margin-top: 2vw; margin-bottom: 2vw">
                 <thead class="table-dark">
                 <tr>
@@ -65,49 +71,50 @@
                 </thead>
                 <tr>
                     <td>K1</td>
-                    <td style="text-align: left">Jumlah publikasi ilmiah di jurnal/proceedings internasional yang sesuai dengan pendidikan terakhir/tahun</td>
-                    <td>20</td>
+                    <td th:text="${desc.k1}"></td>
+                    <td th:text="${desc.deskripsiK1}"></td>
                 </tr>
                 <tr>
                     <td>K2</td>
-                    <td style="text-align: left">Jumlah publikasi ilmiah di jurnal/proceeding nasionalyang sesuai dengan pendidikan terakhir/tahun</td>
-                    <td>15</td>
+                    <td th:text="${desc.k2}"></td>
+                    <td th:text="${desc.deskripsiK2}"></td>
                 </tr>
                 <tr>
                     <td>K3</td>
-                    <td style="text-align: left">Jumlah paten</td>
-                    <td>10</td>
+                    <td th:text="${desc.k3}"></td>
+                    <td th:text="${desc.deskripsiK3}"></td>
                 </tr>
                 <tr>
                     <td>K4</td>
-                    <td style="text-align: left">Jumlah hak cipta</td>
-                    <td>5</td>
+                    <td th:text="${desc.k4}"></td>
+                    <td th:text="${desc.deskripsiK4}"></td>
                 </tr>
                 <tr>
                     <td>K5</td>
-                    <td style="text-align: left">Attitude (sikap)</td>
-                    <td>5</td>
+                    <td th:text="${desc.k5}"></td>
+                    <td th:text="${desc.deskripsiK5}"></td>
                 </tr>
                 <tr>
                     <td>K6</td>
-                    <td style="text-align: left">Kehadiran</td>
-                    <td>10</td>
+                    <td th:text="${desc.k6}"></td>
+                    <td th:text="${desc.deskripsiK6}"></td>
                 </tr>
                 <tr>
                     <td>K7</td>
-                    <td style="text-align: left">Jumlah kegiatan yang diikuti</td>
-                    <td>10</td>
+                    <td th:text="${desc.k7}"></td>
+                    <td th:text="${desc.deskripsiK7}"></td>
                 </tr>
                 <tr>
                     <td>K8</td>
-                    <td style="text-align: left">Jumlah keterlibatan dalam tim kegiatan</td>
-                    <td>10</td>
+                    <td th:text="${desc.k8}"></td>
+                    <td th:text="${desc.deskripsiK8}"></td>
                 </tr>
                 <tr>
                     <td>K9</td>
-                    <td style="text-align: left">Menjadi nara sumber (minimal 1x) sesuai kepakarannya dengan membawa nama IT-PLN</td>
-                    <td>15</td>
+                    <td th:text="${desc.k9}"></td>
+                    <td th:text="${desc.deskripsiK9}"></td>
                 </tr>
+
             </table>
         </div>
 

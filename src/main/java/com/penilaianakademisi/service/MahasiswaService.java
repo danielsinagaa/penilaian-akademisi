@@ -1,5 +1,6 @@
 package com.penilaianakademisi.service;
 
+import com.penilaianakademisi.entity.Dosen;
 import com.penilaianakademisi.entity.Mahasiswa;
 import com.penilaianakademisi.entity.MahasiswaAplusMin;
 import com.penilaianakademisi.entity.model.MahasiswaEdit;
@@ -362,7 +363,9 @@ public class MahasiswaService extends AbstractService<Mahasiswa> {
         k5List.add(request.getK5());
         k6List.add(request.getK6());
 
-        mahasiswaList.add(new Mahasiswa(request));
+        if (!request.getNama().equals("description example")){
+            mahasiswaList.add(new Mahasiswa(request));
+        }
 
         double temp = 0.0;
 

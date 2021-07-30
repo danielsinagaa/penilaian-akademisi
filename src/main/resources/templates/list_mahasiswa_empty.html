@@ -43,6 +43,18 @@
         <h2 style="margin-top: 3vh">Daftar Mahasiswa</h2>
 
         <div style="width: 30vw; padding-top: 1vh; padding-bottom: 1vh; background-color: #A7C4BC; border-radius: 7px">
+
+
+            <div style=" margin-top: 2vh; margin-left: 5vh; text-align: left">
+                <h5>Masukkan Data Excel: </h5>
+
+                <form th:action="@{/upload/mahasiswa}" method="post" enctype="multipart/form-data">
+                    <input type="file" name="file" accept="application/vnd.ms-excel application/vnd.openxmlformats-officedocument.spreadsheetml.sheet">
+                    <br>
+                    <button style="background-color: #053742;color: white; border-radius: 5px" type="submit">submit</button>
+                </form>
+            </div>
+
             <img src="../static/images/no_data.png" th:src="@{/images/no_data.png}" width="300" class="rounded mx-auto" >
 
             <div style="margin-left: 5vw">

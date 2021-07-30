@@ -1,5 +1,6 @@
 package com.penilaianakademisi.service;
 
+import com.penilaianakademisi.entity.Dosen;
 import com.penilaianakademisi.entity.Karyawan;
 import com.penilaianakademisi.entity.KaryawanAplusMin;
 import com.penilaianakademisi.entity.model.KaryawanEdit;
@@ -281,7 +282,9 @@ public class KaryawanService extends AbstractService<Karyawan> {
         k3List.add(request.getK3());
         k4List.add(request.getK4());
 
-        karyawanList.add(new Karyawan(request));
+        if (!request.getNama().equals("description example")){
+            karyawanList.add(new Karyawan(request));
+        }
 
         double temp = 0.0;
 

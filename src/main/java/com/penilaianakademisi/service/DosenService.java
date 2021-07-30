@@ -2,6 +2,7 @@ package com.penilaianakademisi.service;
 
 import com.penilaianakademisi.entity.Dosen;
 import com.penilaianakademisi.entity.DosenAplusmin;
+import com.penilaianakademisi.entity.DosenDesc;
 import com.penilaianakademisi.entity.model.DosenEdit;
 import com.penilaianakademisi.entity.model.DosenRequest;
 import com.penilaianakademisi.repository.DosenRepository;
@@ -17,6 +18,9 @@ public class DosenService extends AbstractService<Dosen> {
     @Autowired
     private DosenAplusminService aPlusMinService;
 
+    @Autowired
+    private DosenDescService dosenDescService;
+
     public DosenService(DosenRepository repository) {
         super(repository);
     }
@@ -28,6 +32,8 @@ public class DosenService extends AbstractService<Dosen> {
         dosenList.remove(findById(id));
 
         deleteAll();
+
+        DosenDesc desc = dosenDescService.get();
 
         List<Double> k1List = new ArrayList<>();
         List<Double> k2List = new ArrayList<>();
@@ -137,15 +143,15 @@ public class DosenService extends AbstractService<Dosen> {
             d.setPembagik8(roundUp(d.getK8() / totalPembagiK8));
             d.setPembagik9(roundUp(d.getK9() / totalPembagiK9));
 
-            d.setTernormalisasik1(roundUp(pembagiK1 * 20));
-            d.setTernormalisasik2(roundUp(pembagiK2 * 15));
-            d.setTernormalisasik3(roundUp(pembagiK3 * 10));
-            d.setTernormalisasik4(roundUp(pembagiK4 * 5));
-            d.setTernormalisasik5(roundUp(pembagiK5 * 5));
-            d.setTernormalisasik6(roundUp(pembagiK6 * 10));
-            d.setTernormalisasik7(roundUp(pembagiK7 * 10));
-            d.setTernormalisasik8(roundUp(pembagiK8 * 10));
-            d.setTernormalisasik9(roundUp(pembagiK9 * 15));
+            d.setTernormalisasik1(roundUp(pembagiK1 * desc.getK1()));
+            d.setTernormalisasik2(roundUp(pembagiK2 * desc.getK2()));
+            d.setTernormalisasik3(roundUp(pembagiK3 * desc.getK3()));
+            d.setTernormalisasik4(roundUp(pembagiK4 * desc.getK4()));
+            d.setTernormalisasik5(roundUp(pembagiK5 * desc.getK5()));
+            d.setTernormalisasik6(roundUp(pembagiK6 * desc.getK6()));
+            d.setTernormalisasik7(roundUp(pembagiK7 * desc.getK7()));
+            d.setTernormalisasik8(roundUp(pembagiK8 * desc.getK8()));
+            d.setTernormalisasik9(roundUp(pembagiK9 * desc.getK9()));
         }
 
         if  (dosenList.size() != 0 ){
@@ -258,6 +264,8 @@ public class DosenService extends AbstractService<Dosen> {
 
         deleteAll();
 
+        DosenDesc desc = dosenDescService.get();
+
         List<Double> k1List = new ArrayList<>();
         List<Double> k2List = new ArrayList<>();
         List<Double> k3List = new ArrayList<>();
@@ -377,15 +385,15 @@ public class DosenService extends AbstractService<Dosen> {
             d.setPembagik8(roundUp(d.getK8() / totalPembagiK8));
             d.setPembagik9(roundUp(d.getK9() / totalPembagiK9));
 
-            d.setTernormalisasik1(roundUp(pembagiK1 * 20));
-            d.setTernormalisasik2(roundUp(pembagiK2 * 15));
-            d.setTernormalisasik3(roundUp(pembagiK3 * 10));
-            d.setTernormalisasik4(roundUp(pembagiK4 * 5));
-            d.setTernormalisasik5(roundUp(pembagiK5 * 5));
-            d.setTernormalisasik6(roundUp(pembagiK6 * 10));
-            d.setTernormalisasik7(roundUp(pembagiK7 * 10));
-            d.setTernormalisasik8(roundUp(pembagiK8 * 10));
-            d.setTernormalisasik9(roundUp(pembagiK9 * 15));
+            d.setTernormalisasik1(roundUp(pembagiK1 * desc.getK1()));
+            d.setTernormalisasik2(roundUp(pembagiK2 * desc.getK2()));
+            d.setTernormalisasik3(roundUp(pembagiK3 * desc.getK3()));
+            d.setTernormalisasik4(roundUp(pembagiK4 * desc.getK4()));
+            d.setTernormalisasik5(roundUp(pembagiK5 * desc.getK5()));
+            d.setTernormalisasik6(roundUp(pembagiK6 * desc.getK6()));
+            d.setTernormalisasik7(roundUp(pembagiK7 * desc.getK7()));
+            d.setTernormalisasik8(roundUp(pembagiK8 * desc.getK8()));
+            d.setTernormalisasik9(roundUp(pembagiK9 * desc.getK9()));
         }
 
         if  (dosenList.size() != 0 ){
@@ -482,6 +490,8 @@ public class DosenService extends AbstractService<Dosen> {
 
         deleteAll();
 
+        DosenDesc desc = dosenDescService.get();
+
         List<Double> k1List = new ArrayList<>();
         List<Double> k2List = new ArrayList<>();
         List<Double> k3List = new ArrayList<>();
@@ -514,7 +524,9 @@ public class DosenService extends AbstractService<Dosen> {
         k8List.add(request.getK8());
         k9List.add(request.getK9());
 
-        dosenList.add(new Dosen(request));
+        if (!request.getNama().equals("description example")){
+            dosenList.add(new Dosen(request));
+        }
 
         double temp = 0.0;
 
@@ -602,15 +614,15 @@ public class DosenService extends AbstractService<Dosen> {
             d.setPembagik8(roundUp(d.getK8() / totalPembagiK8));
             d.setPembagik9(roundUp(d.getK9() / totalPembagiK9));
 
-            d.setTernormalisasik1(roundUp(pembagiK1 * 20));
-            d.setTernormalisasik2(roundUp(pembagiK2 * 15));
-            d.setTernormalisasik3(roundUp(pembagiK3 * 10));
-            d.setTernormalisasik4(roundUp(pembagiK4 * 5));
-            d.setTernormalisasik5(roundUp(pembagiK5 * 5));
-            d.setTernormalisasik6(roundUp(pembagiK6 * 10));
-            d.setTernormalisasik7(roundUp(pembagiK7 * 10));
-            d.setTernormalisasik8(roundUp(pembagiK8 * 10));
-            d.setTernormalisasik9(roundUp(pembagiK9 * 15));
+            d.setTernormalisasik1(roundUp(pembagiK1 * desc.getK1()));
+            d.setTernormalisasik2(roundUp(pembagiK2 * desc.getK2()));
+            d.setTernormalisasik3(roundUp(pembagiK3 * desc.getK3()));
+            d.setTernormalisasik4(roundUp(pembagiK4 * desc.getK4()));
+            d.setTernormalisasik5(roundUp(pembagiK5 * desc.getK5()));
+            d.setTernormalisasik6(roundUp(pembagiK6 * desc.getK6()));
+            d.setTernormalisasik7(roundUp(pembagiK7 * desc.getK7()));
+            d.setTernormalisasik8(roundUp(pembagiK8 * desc.getK8()));
+            d.setTernormalisasik9(roundUp(pembagiK9 * desc.getK9()));
         }
 
         if (dosenList.size() != 0 ) {

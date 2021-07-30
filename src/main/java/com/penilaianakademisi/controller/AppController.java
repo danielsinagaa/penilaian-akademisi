@@ -44,9 +44,18 @@ public class AppController {
     @Autowired
     private KaryawanAplusminService karyawanAplusminService;
 
+    @Autowired
+    private DosenDescService dosenDescService;
+
+    @Autowired
+    private MahasiswaDescService mahasiswaDescService;
+
+    @Autowired
+    private KaryawanDescService karyawanDescService;
+
     private Login userLogin = new Login("admin","password",true,"");
 
-    private final String baseDir = "/Users/macbook/Documents/dedek/src/main/resources/static/upload";
+    private final String baseDir = "/Users/macbook/Documents/skripsi/penilaian-akademisi/src/main/resources/static/upload";
 
     @PostMapping("/upload/dosen")
     public String uploadDosen(@RequestParam("file") MultipartFile file) throws IOException {
@@ -61,12 +70,12 @@ public class AppController {
         int lastCell = sheet.getRow(1).getLastCellNum();
 
         if (lastCell != 11 ){
-            return "redirect:/detail_dosen";
+            return "redirect:/dosen/detail";
         }
 
         importDosenExcel(sheet, lastRow, lastCell);
 
-        return "redirect:/detail_dosen";
+        return "redirect:/dosen/detail";
     }
 
     @PostMapping("/upload/mahasiswa")
@@ -82,12 +91,12 @@ public class AppController {
         int lastCell = sheet.getRow(1).getLastCellNum();
 
         if (lastCell != 8 ){
-            return "redirect:/test";
+            return "redirect:/mahasiswa/detail";
         }
 
         importMahasiswaExcel(sheet, lastRow, lastCell);
 
-        return "redirect:/test";
+        return "redirect:/mahasiswa/detail";
     }
 
     @PostMapping("/upload/karyawan")
@@ -102,16 +111,13 @@ public class AppController {
         int lastRow = sheet.getLastRowNum();
         int lastCell = sheet.getRow(1).getLastCellNum();
 
-        System.out.println("=======================");
-        System.out.println(lastCell);
-
         if (lastCell != 6){
-            return "redirect:/test";
+            return "redirect:/karyawan/detail";
         }
 
         importKaryawanExcel(sheet, lastRow, lastCell);
 
-        return "redirect:/test";
+        return "redirect:/karyawan/detail";
     }
 
     private void importDosenExcel(XSSFSheet sheet, int lastRow, int lastCell) {
@@ -119,7 +125,6 @@ public class AppController {
             DosenRequest dosenRequest = new DosenRequest();
             XSSFRow row = sheet.getRow(i);
 
-            System.out.print(i + ". || ");
             for (int c = 1; c <= lastCell; c++){
 
                 XSSFCell cell = row.getCell(c);
@@ -296,6 +301,7 @@ public class AppController {
         model.addAttribute("karyawanList", karyawanSet);
         model.addAttribute("sortedKaryawanList", sortedKaryawan);
         model.addAttribute("aPlusMin", aPlusMin);
+        model.addAttribute("desc", karyawanDescService.get());
         return "detail_karyawan";
     }
 
@@ -323,6 +329,7 @@ public class AppController {
         model.addAttribute("mahasiswaList", mahasiswaSet);
         model.addAttribute("sortedMahasiswaList", sortedMahasiswa);
         model.addAttribute("aPlusMin", aPlusMin);
+        model.addAttribute("desc", mahasiswaDescService.get());
         return "detail_mahasiswa";
     }
 
@@ -350,6 +357,7 @@ public class AppController {
         model.addAttribute("dosenList", dosenSet);
         model.addAttribute("sortedDosenList", sortedDosen);
         model.addAttribute("aPlusMin", aPlusMin);
+        model.addAttribute("desc", dosenDescService.get());
         return "detail_dosen";
     }
 
@@ -465,6 +473,27 @@ public class AppController {
         return "update_dosen";
     }
 
+    @GetMapping("/updateDescDosen")
+    public String updateDescDosen(Model model) {
+        DosenDesc desc = dosenDescService.get();
+        model.addAttribute("desc", desc);
+        return "update_desc_dosen";
+    }
+
+    @GetMapping("/updateDescMahasiswa")
+    public String updateDescMahasiswa(Model model) {
+        MahasiswaDesc desc = mahasiswaDescService.get();
+        model.addAttribute("desc", desc);
+        return "update_mahasiswa_dosen";
+    }
+
+    @GetMapping("/updateDescKaryawan")
+    public String updateDescKaryawan(Model model) {
+        KaryawanDesc desc = karyawanDescService.get();
+        model.addAttribute("desc", desc);
+        return "update_karyawan_dosen";
+    }
+
     @GetMapping("/updateMahasiswa/{id}")
     public String updateMahasiswa(@PathVariable( value = "id") String id, Model model) {
         if (!userLogin.getLogin()){
@@ -508,6 +537,27 @@ public class AppController {
         return "redirect:/dosen";
     }
 
+    @PostMapping("/editDescDosen")
+    public String editDescDosen(@ModelAttribute("desc") DosenDesc desc, Model model) {
+
+        dosenDescService.save(desc);
+        return "redirect:/dosen/detail";
+    }
+
+    @PostMapping("/editMahasiswaDesc")
+    public String editMahasiswaDesc(@ModelAttribute("desc") MahasiswaDesc desc, Model model) {
+
+        mahasiswaDescService.save(desc);
+        return "redirect:/mahasiswa/detail";
+    }
+
+    @PostMapping("/editKaryawanDesc")
+    public String editKaryawanDesc(@ModelAttribute("desc") KaryawanDesc desc, Model model) {
+
+        karyawanDescService.save(desc);
+        return "redirect:/karyawan/detail";
+    }
+
     @PostMapping("/editMahasiswa")
     public String editMahasiswa(@ModelAttribute("dosen") MahasiswaEdit mahasiswa, Model model) {
         if (!userLogin.getLogin()){
@@ -544,17 +594,14 @@ public class AppController {
         }
 
         dosenService.delete(id);
-<<<<<<< HEAD
 
         if (dosenService.findAll().size() == 0){
             return "list_dosen_empty";
         }
 
-=======
         if (dosenService.findAll().size() == 0 ){
             return "list_dosen_empty";
         }
->>>>>>> 73b7d1e22212f70ab60e54b2e9e3cbb044834cc5
         return "redirect:/dosen";
     }
 
@@ -569,17 +616,14 @@ public class AppController {
 
         mahasiswaService.delete(id);
 
-<<<<<<< HEAD
         if (mahasiswaService.findAll().size() == 0){
             return "list_mahasiswa_empty";
         }
 
-=======
         mahasiswaService.delete(id);
         if (mahasiswaService.findAll().size() == 0 ){
             return "list_mahasiswa_empty";
         }
->>>>>>> 73b7d1e22212f70ab60e54b2e9e3cbb044834cc5
         return "redirect:/mahasiswa";
     }
 
@@ -593,18 +637,13 @@ public class AppController {
         }
 
         karyawanService.delete(id);
-
-<<<<<<< HEAD
         if (karyawanService.findAll().size() == 0){
             return "list_karyawan_empty";
         }
-
-=======
         karyawanService.delete(id);
         if (karyawanService.findAll().size() == 0 ){
             return "list_karyawan_empty";
         }
->>>>>>> 73b7d1e22212f70ab60e54b2e9e3cbb044834cc5
         return "redirect:/karyawan";
     }
 

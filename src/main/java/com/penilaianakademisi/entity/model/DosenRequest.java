@@ -1,8 +1,10 @@
 package com.penilaianakademisi.entity.model;
 
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
+@NoArgsConstructor
 public class DosenRequest {
     private String nama;
 
@@ -23,4 +25,17 @@ public class DosenRequest {
     private Double k8;
 
     private Double k9;
+
+    public DosenRequest(String request) {
+        this.nama = request;
+        this.k1 = 1.5;
+        this.k2 = 1.5;
+        this.k3 = 1.5;
+        this.k4 = 1.5;
+        this.k5 = 1.5;
+        this.k6 = 1.5;
+        this.k7 = 1.5;
+        this.k8 = 1.5;
+        this.k9 = 1.5;
+    }
 }

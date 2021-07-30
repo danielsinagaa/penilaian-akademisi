@@ -53,8 +53,14 @@
             </a>
         </div>
 
-        <div style="border-radius: 7px; background-color: #A7C4BC; width: 30vw; text-align: center; padding-top: 1vh; padding-bottom: 1vh; margin-top: 3vh; margin-bottom: 3vh">
+        <div style="border-radius: 7px; background-color: #A7C4BC; width: 50vw; text-align: center; padding-top: 1vh; padding-bottom: 1vh; margin-top: 3vh; margin-bottom: 3vh">
             <h3 style="margin-top: 5vh">Deskripsi</h3>
+
+            <div style="margin-right: 10vh; text-align: right; position: relative; ">
+                <a th:href="@{/updateDescKaryawan}" class="btn btn-sm mb-3" style="background-color: #DEEEEA; color: white">
+                    <img src="../static/images/edit.png" th:src="@{/images/edit.png}" width="30" class="rounded mx-auto" >
+                </a>
+            </div>
 
             <table class="table table-striped table-hover table-sm" style="width: 85%; margin-left: auto; margin-right: auto; margin-top: 2vw; margin-bottom: 2vw">
                 <thead class="table-dark">
@@ -66,23 +72,23 @@
                 </thead>
                 <tr>
                     <td>K1</td>
-                    <td style="text-align: left">Kehadiran</td>
-                    <td>15</td>
+                    <td th:text="${desc.k1}"></td>
+                    <td th:text="${desc.deskripsiK1}"></td>
                 </tr>
                 <tr>
                     <td>K2</td>
-                    <td style="text-align: left">ATTITUDE (Sikap)</td>
-                    <td>15</td>
+                    <td th:text="${desc.k2}"></td>
+                    <td th:text="${desc.deskripsiK2}"></td>
                 </tr>
                 <tr>
                     <td>K3</td>
-                    <td style="text-align: left">Jumlah kegiatan yang diikuti</td>
-                    <td>35</td>
+                    <td th:text="${desc.k3}"></td>
+                    <td th:text="${desc.deskripsiK3}"></td>
                 </tr>
                 <tr>
                     <td>K4</td>
-                    <td style="text-align: left">Jumlah keterlibatan dalam tim kegiatan</td>
-                    <td>35</td>
+                    <td th:text="${desc.k4}"></td>
+                    <td th:text="${desc.deskripsiK4}"></td>
                 </tr>
             </table>
         </div>
